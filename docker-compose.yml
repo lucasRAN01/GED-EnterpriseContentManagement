@@ -162,7 +162,7 @@ services:
       - .env
     environment:
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
-      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:?set_in_.env_pour_profil_sso}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-keycloak-dev-only-change-me}
     command: ["start-dev"]
     volumes:
       - kcdata:/opt/keycloak/data
