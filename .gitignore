@@ -1,0 +1,14 @@
+# Secrets locaux — ne jamais committer
+.env
+config/mayan.env
+
+# Sauvegardes locales
+backup-*.sql
+*.dump
+
+# OS / éditeurs
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
