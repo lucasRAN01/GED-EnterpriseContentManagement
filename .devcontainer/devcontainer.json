@@ -1,14 +1,34 @@
 {
   "name": "GED-ECM Mayan",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
   "features": {
     "ghcr.io/devcontainers/features/docker-in-docker:2": {}
   },
-  "portsAttributes": {
-    "8000": { "label": "Mayan EDMS", "onAutoForward": "openPreview" },
-    "3000": { "label": "Metabase (profil stats)", "onAutoForward": "silent" },
-    "8080": { "label": "Keycloak (profil sso)", "onAutoForward": "silent" }
+  "hostRequirements": {
+    "cpus": 2,
+    "memory": "8gb",
+    "storage": "32gb"
   },
-  "postCreateCommand": "cp -n .env.example .env; cp -n config/mayan.env.example config/mayan.env; docker compose version",
+  "forwardPorts": [
+    8000
+  ],
+  "portsAttributes": {
+    "8000": {
+      "label": "Mayan EDMS",
+      "onAutoForward": "openBrowser"
+    },
+    "3000": {
+      "label": "Metabase (profil stats)",
+      "onAutoForward": "silent"
+    },
+    "8080": {
+      "label": "Keycloak (profil sso)",
+      "onAutoForward": "silent"
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "postStartCommand": "bash .devcontainer/start.sh",
   "remoteUser": "vscode"
 }

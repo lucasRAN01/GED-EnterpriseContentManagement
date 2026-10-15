@@ -14,9 +14,20 @@ Copy-Item "config\mayan.env.example" "config\mayan.env"
 # renseigner mots de passe dans .env
 docker compose up -d
 docker compose logs -f app
+python scripts\seed_meh.py --password "<MAYAN_ADMIN_PASSWORD>"
 ```
 
 Première connexion : `http://localhost:8000` avec `MAYAN_ADMIN_USER/PASSWORD`.
+La langue de l'interface se règle par utilisateur (menu profil > Langue et fuseau horaire).
+
+Image : `mayanedms/mayanedms:v4.12.2` (l'image `mayanedms/mayan-edms` n'existe pas). Mayan ne lit
+que des variables `MAYAN_<RÉGLAGE>` : base via `MAYAN_DATABASES`, Redis via
+`MAYAN_CELERY_BROKER_URL`, `MAYAN_CELERY_RESULT_BACKEND` et `MAYAN_LOCK_MANAGER_BACKEND`,
+compte initial via `MAYAN_AUTOADMIN_*`. Sans `MAYAN_DATABASES`, Mayan retombe sur SQLite.
+
+OCR français : le pack `tesseract-ocr-fra` n'est pas dans l'image. Il est installé à chaque démarrage
+par `MAYAN_APT_INSTALLS`, ce qui demande un accès Internet au serveur. Hors ligne, construire une image
+dérivée (`FROM mayanedms/mayanedms:v4.12.2` + `apt-get install tesseract-ocr-fra`).
 
 ## Profils optionnels
 
@@ -40,7 +51,7 @@ docker compose --profile stats up -d
 
 - Serveur central MEH + dossiers scan par direction (décentralisé -> centralisé, conforme TDR)
 - Onduleur + clim, backup offsite chiffré, supervision `docker ps` + healthchecks
-- Montée en charge : augmenter workers B/C (OCR), passer recherche sur OpenSearch si >500k pages
+- Montée en charge : le conteneur `app` lance tout (`run_all`) ; au besoin, sortir les workers OCR dans des conteneurs `run_worker worker_b` dédiés, passer la recherche sur OpenSearch si >500k pages
 - Sécurité : HTTPS obligatoire, OIDC dès que possible, comptes service à portée minimale, audit exporté
 
 ## Limites MVP assumées
