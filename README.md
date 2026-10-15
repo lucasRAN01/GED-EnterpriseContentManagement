@@ -24,8 +24,13 @@ GED-ECM/
     init.ps1              # premier démarrage (Windows)
     deploy-vps.sh         # provision VPS Ubuntu + démarrage
     backup.ps1            # sauvegarde data + db
-  .devcontainer/          # GitHub Codespaces avec Docker-in-Docker
+  .devcontainer/          # GitHub Codespaces : démarrage et paramétrage automatiques
 ```
+
+## Voir l'application sans rien installer (gratuit)
+
+[Ouvrir dans GitHub Codespaces](https://codespaces.new/lucasRAN01/GED-EnterpriseContentManagement) : Mayan démarre,
+se paramètre pour le MEH et charge des documents fictifs tout seul. Détails : `docs/03-executer-sans-docker-local.md`.
 
 ## Démarrage rapide (Windows PowerShell 5.1)
 

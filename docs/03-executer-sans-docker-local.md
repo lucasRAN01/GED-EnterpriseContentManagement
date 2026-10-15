@@ -3,21 +3,22 @@
 Docker Desktop est en panne sur la machine : aucune étape ci-dessous n'exige le daemon local.
 `docker compose config` reste la validation de référence (100% client, sans daemon).
 
-## Option A — GitHub Codespaces (recommandée)
+## Option A — GitHub Codespaces (recommandée, gratuite)
 
-1. Pousser `main` (déjà fait), ouvrir le repo -> Code -> Codespaces -> Create.
-2. Le `.devcontainer` démarre avec Docker-in-Docker.
-3. Dans le terminal du Codespace :
-```bash
-cp -n .env.example .env
-cp -n config/mayan.env.example config/mayan.env
-# renseigner mots de passe dans .env
-docker compose up -d
-docker compose ps
-docker compose logs -f app
-python3 scripts/seed_meh.py --password "<MAYAN_ADMIN_PASSWORD>"
-```
-4. Ouvrir le port forwardé `8000` -> Mayan. Login `admin` / mot de passe du `.env` du Codespace.
+Codespaces est inclus gratuitement dans un compte GitHub personnel : 120 heures-cœur par mois,
+soit 60 heures d'utilisation sur la machine 2 cœurs, et 15 Go de stockage. Arrêtez le Codespace
+après usage (il s'arrête seul après 30 min d'inactivité) pour rester dans le quota.
+
+1. Ouvrir https://codespaces.new/lucasRAN01/GED-EnterpriseContentManagement
+   (choisir la branche voulue, machine 2 cœurs / 8 Go) -> Create codespace.
+2. Attendre 5 à 10 minutes la première fois. Le Codespace tout seul :
+   - génère des mots de passe aléatoires dans `.env` ;
+   - lance Mayan (`docker compose up -d`) ;
+   - applique le paramétrage MEH (`seed_meh.py`) et charge 7 documents fictifs (`demo_data.py`) ;
+   - affiche l'identifiant et le mot de passe admin dans le terminal.
+3. Onglet PORTS -> port `8000` -> ouvrir dans le navigateur. Le port reste privé à votre compte GitHub.
+4. Pour revenir plus tard : github.com/codespaces -> relancer le même Codespace. Les données sont conservées
+   et `.devcontainer/start.sh` relance tout sans créer de doublons.
 
 ## Option B — VPS Ubuntu (proche prod MEH)
 
