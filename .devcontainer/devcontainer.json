@@ -1,6 +1,8 @@
 {
   "name": "GED-ECM Mayan",
-  "image": "mcr.microsoft.com/devcontainers/python:1-3.12-bookworm",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
   "features": {
     "ghcr.io/devcontainers/features/docker-in-docker:2": {}
   },
@@ -9,11 +11,22 @@
     "memory": "8gb",
     "storage": "32gb"
   },
-  "forwardPorts": [8000],
+  "forwardPorts": [
+    8000
+  ],
   "portsAttributes": {
-    "8000": { "label": "Mayan EDMS", "onAutoForward": "openBrowser" },
-    "3000": { "label": "Metabase (profil stats)", "onAutoForward": "silent" },
-    "8080": { "label": "Keycloak (profil sso)", "onAutoForward": "silent" }
+    "8000": {
+      "label": "Mayan EDMS",
+      "onAutoForward": "openBrowser"
+    },
+    "3000": {
+      "label": "Metabase (profil stats)",
+      "onAutoForward": "silent"
+    },
+    "8080": {
+      "label": "Keycloak (profil sso)",
+      "onAutoForward": "silent"
+    }
   },
   "postCreateCommand": "bash .devcontainer/setup.sh",
   "postStartCommand": "bash .devcontainer/start.sh",
