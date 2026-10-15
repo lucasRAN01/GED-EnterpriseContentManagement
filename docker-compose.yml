@@ -63,7 +63,8 @@ services:
     volumes:
       - mayanmedia:/var/lib/mayan
     healthcheck:
-      test: ["CMD-SHELL", "curl -fsS -o /dev/null http://localhost:8000/authentication/login/ || exit 1"]
+      # ni curl ni wget dans l'image, et gunicorn écoute sur l'IP du conteneur, pas sur localhost
+      test: ["CMD", "/opt/mayan-edms/bin/python", "-c", "import socket,urllib.request; urllib.request.urlopen('http://%s:8000/authentication/login/' % socket.gethostbyname(socket.gethostname()), timeout=8)"]
       interval: 30s
       timeout: 10s
       retries: 5
