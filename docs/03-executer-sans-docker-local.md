@@ -15,6 +15,7 @@ cp -n config/mayan.env.example config/mayan.env
 docker compose up -d
 docker compose ps
 docker compose logs -f app
+python3 scripts/seed_meh.py --password "<MAYAN_ADMIN_PASSWORD>"
 ```
 4. Ouvrir le port forwardé `8000` -> Mayan. Login `admin` / mot de passe du `.env` du Codespace.
 
@@ -43,4 +44,4 @@ git status --porcelain         # .env doit rester invisible (ignoré)
 - [ ] Créer 1 type doc test + 1 cabinet test + upload 1 PDF FR + recherche plein-texte
 - [ ] Créer 1 workflow test à 2 états + 1 transition
 - [ ] `scripts/backup.ps1` (Windows) / dump Postgres testé
-- [ ] Seulement après : appliquer `docs/01-parametrage-MEH.md` complet
+- [ ] `python3 scripts/seed_meh.py` applique `docs/01-parametrage-MEH.md` ; `demo_data.py` ajoute des documents fictifs

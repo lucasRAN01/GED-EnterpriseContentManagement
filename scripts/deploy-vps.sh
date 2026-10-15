@@ -16,7 +16,12 @@ if ! command -v docker >/dev/null 2>&1; then
   sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 fi
 
-docker compose version
-docker compose up -d
-docker compose ps
-echo "Mayan : http://$(hostname -I | awk '{print $1}'):8000"
+# Sur un serveur neuf, l'utilisateur n'est pas encore dans le groupe docker
+DOCKER="docker"
+if ! docker info >/dev/null 2>&1; then DOCKER="sudo docker"; fi
+
+$DOCKER compose version
+$DOCKER compose up -d
+$DOCKER compose ps
+echo "Mayan : http://$(hostname -I | awk '{print $1}'):8000 (2 à 5 min au premier lancement)"
+echo "Paramétrage MEH : python3 scripts/seed_meh.py --password <MAYAN_ADMIN_PASSWORD>"

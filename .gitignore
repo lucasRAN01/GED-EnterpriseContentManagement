@@ -12,3 +12,6 @@ Thumbs.db
 *.log
 .vscode/
 .idea/
+
+# Python
+__pycache__/
